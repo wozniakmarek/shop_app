@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/providers/cart.dart';
+
+import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
   final String id;
@@ -10,11 +11,12 @@ class CartItem extends StatelessWidget {
   final String title;
 
   CartItem(
-      {required this.id,
-      required this.productId,
-      required this.price,
-      required this.quantity,
-      required this.title});
+    this.id,
+    this.productId,
+    this.price,
+    this.quantity,
+    this.title,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -35,31 +37,33 @@ class CartItem extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) {
-        Provider.of<Cart>(context, listen: false).removeItem(productId);
-      },
       confirmDismiss: (direction) {
         return showDialog(
-            context: context,
-            builder: (ctx) => AlertDialog(
-                  title: Text('Are you sure?'),
-                  content:
-                      Text('Do you want to remove the item from the cart?'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text('No'),
-                      onPressed: () {
-                        Navigator.of(ctx).pop(false);
-                      },
-                    ),
-                    TextButton(
-                      child: Text('Yes'),
-                      onPressed: () {
-                        Navigator.of(ctx).pop(true);
-                      },
-                    ),
-                  ],
-                ));
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text(
+              'Do you want to remove the item from the cart?',
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(ctx).pop(false);
+                },
+              ),
+              TextButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.of(ctx).pop(true);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+      onDismissed: (direction) {
+        Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       child: Card(
         margin: EdgeInsets.symmetric(
@@ -73,13 +77,13 @@ class CartItem extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(5),
                 child: FittedBox(
-                  child: Text('\$${price}'),
+                  child: Text('\$$price'),
                 ),
               ),
             ),
             title: Text(title),
-            subtitle: Text('Total: \$${price * quantity}'),
-            trailing: Text('${quantity}x'),
+            subtitle: Text('Total: \$${(price * quantity)}'),
+            trailing: Text('$quantity x'),
           ),
         ),
       ),
