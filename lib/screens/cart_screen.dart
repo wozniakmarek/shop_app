@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show Cart;
 import '../widgets/cart_item.dart';
-import '../providers/orders.dart' show Orders;
+import '../providers/orders.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -72,7 +72,7 @@ class OrderButton extends StatefulWidget {
   final Cart cart;
 
   @override
-  State<OrderButton> createState() => _OrderButtonState();
+  _OrderButtonState createState() => _OrderButtonState();
 }
 
 class _OrderButtonState extends State<OrderButton> {
@@ -97,7 +97,7 @@ class _OrderButtonState extends State<OrderButton> {
               });
               widget.cart.clear();
             },
-      //set color to primary color
+      //set the color
       style: TextButton.styleFrom(
         primary: Theme.of(context).primaryColor,
       ),
